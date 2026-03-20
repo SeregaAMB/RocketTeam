@@ -29,9 +29,9 @@ dp = Dispatcher()
 
 @dp.message(Command("start"))
 async def start_cmd(message: types.Message):
-    await message.answer("🇬🇧Welcome in our support chat! Ask your question here
-
-🇷🇺Добро пожаловать в чат поддержки. Задавайте свои вопросы здесь")
+    await message.answer("""🇬🇧Welcome in our support chat! Ask your question here
+    
+    🇷🇺Добро пожаловать в чат поддержки. Задавайте свои вопросы здесь""")
 
 async def main():
     keep_alive()
