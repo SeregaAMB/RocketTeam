@@ -1,41 +1,38 @@
-import os
 import asyncio
-from aiogram import Bot, Dispatcher, types
+import logging
+from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
-from flask import Flask
-from threading import Thread
 
-# Создаем веб-сервер для "оживлятора"
-app = Flask('')
+# Вставьте сюда ваш токен от @BotFather
+TOKEN = "8310202959:AAEz-uJWNy4qNRw_zGAIVxGqbOZLzuN5V9o"
 
-@app.route('/')
-def home():
-    return "I am alive!"
-
-def run():
-    # Render выдает порт автоматически, берем его из переменной окружения
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port)
-
-def keep_alive():
-    t = Thread(target=run)
-    t.start()
-
-# --- ВСТАВЬТЕ ВАШ ТОКЕН НИЖЕ ---
-API_TOKEN = '8538494246:AAH3v-kqF2bK5Yd73B_soJAaZmb0EpYph-g'
-
-bot = Bot(token=API_TOKEN)
+# Инициализация бота и диспетчера
+bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
+# Хэндлер на команду /start
 @dp.message(Command("start"))
-async def start_cmd(message: types.Message):
+async def cmd_start(message: types.Message):
+    # ПРИВЕТСТВЕННОЕ СООБЩЕНИЕ
     await message.answer("""🇬🇧Welcome in our support chat! Ask your question here
     
 🇷🇺Добро пожаловать в чат поддержки. Задавайте свои вопросы здесь""")
 
+# Хэндлер на любое текстовое сообщение от пользователя
+@dp.message(F.text)
+async def handle_all_messages(message: types.Message):
+    # ВАШ ТЕКСТ, КОТОРЫЙ БУДЕТ ИДТИ ПОСЛЕ КАЖДОГО СООБЩЕНИЯ
+    await message.answer("""🇬🇧Thank you for contacting us. We will answer as soon as possible.
+
+🇷🇺Спасибо за то что вышли с нами на связь. Мы занимаемся вашим вопросом и ответим как можно скорее""")
+
+# Запуск процесса поллинга
 async def main():
-    keep_alive()
+    logging.basicConfig(level=logging.INFO)
     await dp.start_polling(bot)
 
-if __name__ == '__main__':
-    asyncio.run(main())
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Бот выключен")
