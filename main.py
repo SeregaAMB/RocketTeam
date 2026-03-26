@@ -8,7 +8,7 @@ from aiogram.filters import Command
 # 1. Исправлено: добавлены логи в начало для отладки
 logging.basicConfig(level=logging.INFO)
 
-TOKEN = "8310202959:AAEz-uJWNy4qNRw_zGAIVxGqbOZLzuN5V9o"
+TOKEN = "8630839431:AAEGc8l8At6PAOn67QaTDwEmxB4v0H7jrYE"
 
 # 2. ОШИБКА БЫЛА ТУТ: Нужно добавить скобки (), чтобы создать экземпляр класса
 bot = Bot(token=TOKEN)
